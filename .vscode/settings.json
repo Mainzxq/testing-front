@@ -1,0 +1,10 @@
+{
+  "window.zoomLevel": -1,
+  "files.autoSave": "afterDelay",
+  "git.enableSmartCommit": true,
+  "editor.formatOnSave": true,
+  "eslint.autoFixOnSave": true,
+  "prettier.eslintIntegration": true,
+  "editor.tabSize": 2,
+  "git.ignoreLimitWarning": true
+}
