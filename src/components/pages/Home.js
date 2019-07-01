@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Button, Grid } from "@material-ui/core";
 import { SearchRounded } from "@material-ui/icons";
+import Questions from "../question/Question";
 
 const userStyles = makeStyles(theme => ({
   root: {
@@ -74,6 +75,7 @@ const Home = () => {
             </Button>
           </Grid>
         </Grid>
+        <Questions />
       </Container>
     </div>
   );
