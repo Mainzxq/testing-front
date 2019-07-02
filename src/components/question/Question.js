@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import QuestionContext from "../../context/question/questionContext";
+import QuestionItem from "./QuestionItem";
 
 const Question = () => {
   const questionContext = useContext(QuestionContext);
@@ -7,7 +8,7 @@ const Question = () => {
   return (
     <Fragment>
       {questions.map(question => (
-        <h3>{question.title}</h3>
+        <QuestionItem key={question.id} props={question} />
       ))}
     </Fragment>
   );
