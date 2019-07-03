@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { MoreVert, Check } from "@material-ui/icons";
+import { MoreVert, Check, Edit } from "@material-ui/icons";
 import {
   Card,
   CardActions,
@@ -13,7 +13,10 @@ import {
   FormControl,
   FormLabel,
   FormControlLabel,
-  RadioGroup
+  RadioGroup,
+  Typography,
+  Button,
+  Divider
 } from "@material-ui/core";
 import { red, indigo } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,10 +30,13 @@ const useSytles = makeStyles(theme => ({
     height: 0,
     paddingTop: "56.25%"
   },
-  chip: {
-    fontSize: 7
+  title: {
+    fontSize: 12
   },
-
+  normal: {
+    fontSize: 10,
+    color: "#666666"
+  },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
@@ -73,28 +79,38 @@ const QuestionItem = ({ props }) => {
           </IconButton>
         }
         title={
-          <div>{title.replace("&lt;p&gt;", "").replace("&lt;/p&gt;", "")}</div>
+          <Typography className={classes.title}>
+            {title.replace("&lt;p&gt;", "").replace("&lt;/p&gt;", "")}
+          </Typography>
         }
         subheader={
-          <div>
+          <Typography className={classes.normal}>
             <span>{type === "radio" ? "单选 " : "多选 "}</span>
             {answered ? (
               <Chip
                 color="primary"
                 label="已答"
                 size="small"
-                className={classes.chip}
+                style={{ fontSize: 10, height: 14 }}
               />
             ) : (
-              <Chip color="secondary" label="未答" size="small" />
+              <Chip
+                color="secondary"
+                label="未答"
+                size="small"
+                style={{ fontSize: 10, height: 14 }}
+              />
             )}
             <span> 创建时间: {craeteDate}</span>
-          </div>
+          </Typography>
         }
       />
+      <Divider></Divider>
       <CardContent>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">请选择答案：</FormLabel>
+        <FormControl component="fieldset" style={{ marginLeft: 54 }}>
+          <FormLabel component="legend" className={classes.normal}>
+            请选择答案：
+          </FormLabel>
           <RadioGroup
             aria-label="position"
             name={id}
@@ -102,22 +118,53 @@ const QuestionItem = ({ props }) => {
             onChange={handleChange}
           >
             {options.map(item => (
-              <FormControlLabel
-                key={item.id}
-                control={<Radio color="primary" />}
-                value={item.id}
-                checked={item.isRight}
-                label={item.text
-                  .replace("&lt;p&gt;", "")
-                  .replace("&lt;/p&gt;", "")}
-                labelPlacement={item.text
-                  .replace("&lt;p&gt;", "")
-                  .replace("&lt;/p&gt;", "")}
-              />
+              <div>
+                <FormControlLabel
+                  key={item.id}
+                  control={<Radio color="primary" size="small" />}
+                  value={item.id}
+                  label={
+                    <Typography className={classes.normal}>
+                      {item.text
+                        .replace("&lt;p&gt;", "")
+                        .replace("&lt;/p&gt;", "")}
+                    </Typography>
+                  }
+                  labelPlacement="end"
+                />
+                {item.isRight ? (
+                  <Check
+                    htmlColor="green"
+                    fontSize="small"
+                    viewBox="0 0 24 12"
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
             ))}
           </RadioGroup>
         </FormControl>
       </CardContent>
+
+      <div style={{ float: "right" }}>
+        <Button
+          size="small"
+          style={{ height: 24, width: 40, margin: 8 }}
+          className={classes.normal}
+        >
+          修改
+          <Edit fontSize="small" style={{fontSize:14, paddingLeft:4}}></Edit>
+        </Button>
+        <Button
+          size="small"
+          style={{ height: 24, width: 40, margin: 8 }}
+          className={classes.normal}
+        >
+          修改
+          <Edit fontSize="small" style={{fontSize:14, paddingLeft:4}}></Edit>
+        </Button>
+      </div>
     </Card>
   );
 };
