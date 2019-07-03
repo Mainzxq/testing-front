@@ -1,9 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { MoreVert, Check, Edit } from "@material-ui/icons";
+import {
+  MoreVert,
+  Check,
+  Edit,
+  RadioButtonChecked,
+  RadioButtonUnchecked
+} from "@material-ui/icons";
 import {
   Card,
-  CardActions,
   CardHeader,
   CardContent,
   Avatar,
@@ -18,7 +22,7 @@ import {
   Button,
   Divider
 } from "@material-ui/core";
-import { red, indigo } from "@material-ui/core/colors";
+import {  indigo } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useSytles = makeStyles(theme => ({
@@ -55,12 +59,7 @@ const useSytles = makeStyles(theme => ({
 const QuestionItem = ({ props }) => {
   const { answered, id, type, title, craeteDate, options } = props;
   const classes = useSytles();
-  const [expanded, setExpanded] = React.useState(false);
   const [optionsa, setOptionsa] = React.useState({});
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const handleChange = e => {
     setOptionsa(e.target.value);
@@ -101,11 +100,11 @@ const QuestionItem = ({ props }) => {
                 style={{ fontSize: 10, height: 14 }}
               />
             )}
-            <span> 创建时间: {craeteDate}</span>
+            <span> 创建时间: {craeteDate.slice(0, 10)}</span>
           </Typography>
         }
       />
-      <Divider></Divider>
+      <Divider />
       <CardContent>
         <FormControl component="fieldset" style={{ marginLeft: 54 }}>
           <FormLabel component="legend" className={classes.normal}>
@@ -121,7 +120,16 @@ const QuestionItem = ({ props }) => {
               <div>
                 <FormControlLabel
                   key={item.id}
-                  control={<Radio color="primary" size="small" />}
+                  control={
+                    <Radio
+                      color="primary"
+                      fontSize="small"
+                      icon={<RadioButtonUnchecked fontSize="small" />}
+                      checkedIcon={<RadioButtonChecked fontSize="small" />}
+                      disabled={true}
+                      checked={item.isRight}
+                    />
+                  }
                   value={item.id}
                   label={
                     <Typography className={classes.normal}>
@@ -154,7 +162,7 @@ const QuestionItem = ({ props }) => {
           className={classes.normal}
         >
           修改
-          <Edit fontSize="small" style={{fontSize:14, paddingLeft:4}}></Edit>
+          <Edit fontSize="small" style={{ fontSize: 14, paddingLeft: 4 }} />
         </Button>
         <Button
           size="small"
@@ -162,7 +170,7 @@ const QuestionItem = ({ props }) => {
           className={classes.normal}
         >
           修改
-          <Edit fontSize="small" style={{fontSize:14, paddingLeft:4}}></Edit>
+          <Edit fontSize="small" style={{ fontSize: 14, paddingLeft: 4 }} />
         </Button>
       </div>
     </Card>
