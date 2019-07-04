@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
-  MoreVert,
   Check,
   Edit,
   RadioButtonChecked,
@@ -11,7 +10,6 @@ import {
   CardHeader,
   CardContent,
   Avatar,
-  IconButton,
   Chip,
   Radio,
   FormControl,
@@ -24,6 +22,7 @@ import {
 } from "@material-ui/core";
 import { indigo } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
+import QuestionContext from '../../context/question/questionContext'
 
 const useSytles = makeStyles(theme => ({
   card: {
@@ -48,6 +47,10 @@ const useSytles = makeStyles(theme => ({
       duration: theme.transitions.duration.shortest
     })
   },
+  chip: {
+    fontSize: 10,
+    height: 14
+  },
   expandOpen: {
     transform: "rotate(180deg)"
   },
@@ -57,22 +60,27 @@ const useSytles = makeStyles(theme => ({
 }));
 
 const QuestionItem = ({ props }) => {
+  const questionContext = useContext(QuestionContext)
+  const {deleteQuestion, updateQuestion} = questionContext 
   const { answered, id, type, title, craeteDate, options } = props;
   const classes = useSytles();
   const [optionsa, setOptionsa] = React.useState(options);
 
   const handleChange = e => {
-    const opt = options.map(item => {
+    options.map(item => {
       if (item.id === e.target.value) {
         item.isRight = true;
       } else {
         item.isRight = false;
       }
+      return item.id;
     });
-    console.log(opt);
-    // optionsa[e.target.value].isRight = false;
-    setOptionsa({ opt });
+    setOptionsa({ options });
     console.log(e.target);
+  };
+
+  const handleUpdateClick = () => {
+    updateQuestion(props)
   };
   return (
     <Card className={classes.card}>
@@ -82,36 +90,37 @@ const QuestionItem = ({ props }) => {
             {id.split("-")[0].toUpperCase() + id.split("-")[1]}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="Settings">
-            <MoreVert />
-          </IconButton>
-        }
+        // action={
+        //   <IconButton aria-label="Settings">
+        //     <MoreVert />
+        //   </IconButton>
+        // }
         title={
           <Typography className={classes.title}>
             {title.replace("&lt;p&gt;", "").replace("&lt;/p&gt;", "")}
           </Typography>
         }
         subheader={
-          <Typography className={classes.normal}>
+          <div className={classes.normal}>
             <span>{type === "radio" ? "单选 " : "多选 "}</span>
             {answered ? (
               <Chip
                 color="primary"
                 label="已答"
                 size="small"
-                style={{ fontSize: 10, height: 14 }}
+                className={classes.chip}
               />
             ) : (
               <Chip
                 color="secondary"
                 label="未答"
                 size="small"
-                style={{ fontSize: 10, height: 14 }}
+                component="p"
+                className={classes.chip}
               />
             )}
             <span> 创建时间: {craeteDate.slice(0, 10)}</span>
-          </Typography>
+          </div>
         }
       />
       <Divider />
@@ -127,7 +136,7 @@ const QuestionItem = ({ props }) => {
             onChange={handleChange}
           >
             {options.map(item => (
-              <div>
+              <div key={item._id}>
                 <FormControlLabel
                   key={item.id}
                   control={
@@ -170,6 +179,7 @@ const QuestionItem = ({ props }) => {
           size="small"
           style={{ height: 26, width: 40, margin: 8 }}
           className={classes.normal}
+          onClick={handleUpdateClick}
         >
           修改
           <Edit fontSize="small" style={{ fontSize: 14, paddingLeft: 4 }} />
@@ -179,7 +189,7 @@ const QuestionItem = ({ props }) => {
           style={{ height: 26, width: 40, margin: 8 }}
           className={classes.normal}
         >
-          修改
+          修改1
           <Edit fontSize="small" style={{ fontSize: 14, paddingLeft: 4 }} />
         </Button>
       </div>

@@ -69,7 +69,7 @@ const Home = () => {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={console.log(values)}
+              onClick={()=>{}}
             >
               我要查询
             </Button>

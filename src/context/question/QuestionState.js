@@ -2,16 +2,16 @@ import React, { useReducer } from "react";
 import uuid from "uuid";
 import questionContext from "./questionContext";
 import questionReducer from "./questionReducer";
-// import {
-//   CREATE_QUESTION,
-//   DELETE_QUESTION,
-//   SEARCH_QUESTION,
-//   SEARCH_QUESTION_BY_TITLE,
-//   SEARCH_QUESTION_BY_TYPE,
-//   UPDATE_QUESTION
-// } from "../types";
+import {
+  CREATE_QUESTION,
+  DELETE_QUESTION,
+  SEARCH_QUESTION,
+  SEARCH_QUESTION_BY_TITLE,
+  SEARCH_QUESTION_BY_TYPE,
+  UPDATE_QUESTION
+} from "../types";
 
-const ContactState = props => {
+const QuestionState = props => {
   const initialState = {
     questions: [
       {
@@ -81,7 +81,7 @@ const ContactState = props => {
             text: "&lt;p&gt;DPns6600?&lt;/p&gt;\n"
           },
           {
-            isRight: false,
+            isRight: true,
             _id: "5d0f8b2134258e230fa51edc",
             id: "o-104-11Iz",
             text: "&lt;p&gt;Sccba123&lt;/p&gt;\n"
@@ -95,10 +95,25 @@ const ContactState = props => {
 
   const [state, dispatch] = useReducer(questionReducer, initialState);
 
+  // search question
+  // update question
+  const updateQuestion = question => {
+    dispatch({ type: UPDATE_QUESTION, payload: question });
+  };
+
+  const deleteQuestion = id => {
+
+  }
+
+  // create question
+  // delete question
+
   return (
     <questionContext.Provider
       value={{
-        questions: state.questions
+        questions: state.questions,
+        updateQuestion,
+        deleteQuestion
       }}
     >
       {props.children}
@@ -106,4 +121,4 @@ const ContactState = props => {
   );
 };
 
-export default ContactState;
+export default QuestionState;

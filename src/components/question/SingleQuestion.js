@@ -1,19 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 const SingleQuestion = props => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const [items, setItems] = useState({
+    id:"",
+    
+  })
+  return <div />;
+};
 
-SingleQuestion.propTypes = {
+SingleQuestion.propTypes = {};
 
-}
-
-export default SingleQuestion
-
-
-
+export default SingleQuestion;
