@@ -22,7 +22,7 @@ import {
   Button,
   Divider
 } from "@material-ui/core";
-import {  indigo } from "@material-ui/core/colors";
+import { indigo } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useSytles = makeStyles(theme => ({
@@ -59,10 +59,20 @@ const useSytles = makeStyles(theme => ({
 const QuestionItem = ({ props }) => {
   const { answered, id, type, title, craeteDate, options } = props;
   const classes = useSytles();
-  const [optionsa, setOptionsa] = React.useState({});
+  const [optionsa, setOptionsa] = React.useState(options);
 
   const handleChange = e => {
-    setOptionsa(e.target.value);
+    const opt = options.map(item => {
+      if (item.id === e.target.value) {
+        item.isRight = true;
+      } else {
+        item.isRight = false;
+      }
+    });
+    console.log(opt);
+    // optionsa[e.target.value].isRight = false;
+    setOptionsa({ opt });
+    console.log(e.target);
   };
   return (
     <Card className={classes.card}>
@@ -113,7 +123,7 @@ const QuestionItem = ({ props }) => {
           <RadioGroup
             aria-label="position"
             name={id}
-            value={optionsa}
+            value={optionsa.id}
             onChange={handleChange}
           >
             {options.map(item => (
@@ -126,7 +136,7 @@ const QuestionItem = ({ props }) => {
                       fontSize="small"
                       icon={<RadioButtonUnchecked fontSize="small" />}
                       checkedIcon={<RadioButtonChecked fontSize="small" />}
-                      disabled={true}
+                      disabled={false}
                       checked={item.isRight}
                     />
                   }
@@ -158,7 +168,7 @@ const QuestionItem = ({ props }) => {
       <div style={{ float: "right" }}>
         <Button
           size="small"
-          style={{ height: 24, width: 40, margin: 8 }}
+          style={{ height: 26, width: 40, margin: 8 }}
           className={classes.normal}
         >
           修改
@@ -166,7 +176,7 @@ const QuestionItem = ({ props }) => {
         </Button>
         <Button
           size="small"
-          style={{ height: 24, width: 40, margin: 8 }}
+          style={{ height: 26, width: 40, margin: 8 }}
           className={classes.normal}
         >
           修改
