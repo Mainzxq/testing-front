@@ -14,12 +14,17 @@ export default (state, action) => {
       newQuestions.map(que => {
         if (action.payload.id === que.id) {
           que = action.payload;
-          console.log(que);
         }
       });
       return {
         ...state,
         questions: newQuestions
+      };
+
+    case DELETE_QUESTION:
+      return {
+        ...state,
+        questions: state.questions.filter(item => item.id !== action.payload)
       };
     default:
       return state;

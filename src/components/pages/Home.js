@@ -14,6 +14,7 @@ const userStyles = makeStyles(theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap"
+
   },
   button: {
     margin: theme.spacing(1),
@@ -41,7 +42,6 @@ const Home = () => {
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
-    console.log(event.target.value);
   };
 
   return (

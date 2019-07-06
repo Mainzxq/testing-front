@@ -15,7 +15,7 @@ const App = () => {
         <Fragment>
           <CssBaseline />
           <Navbar />
-          <div style={{ fontFamily: "Noto Sans sc", marginTop: 8 }}>
+          <div style={{ fontFamily: "Noto Sans sc", marginTop: 16 }}>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/about" component={About} />

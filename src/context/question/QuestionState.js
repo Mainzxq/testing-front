@@ -11,6 +11,7 @@ import {
   UPDATE_QUESTION
 } from "../types";
 
+
 const QuestionState = props => {
   const initialState = {
     questions: [
@@ -102,9 +103,14 @@ const QuestionState = props => {
   };
 
   const deleteQuestion = id => {
-
+    dispatch({type: DELETE_QUESTION, payload: id})
   }
 
+  const createQuestion = question => {
+    const id = uuid.v4()
+    question.id = "q" + state.questions.length() + id
+    dispatch({type: CREATE_QUESTION, payload: question})
+  }
   // create question
   // delete question
 

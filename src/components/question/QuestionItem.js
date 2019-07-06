@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import {
   Check,
   Edit,
@@ -22,12 +22,13 @@ import {
 } from "@material-ui/core";
 import { indigo } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-import QuestionContext from '../../context/question/questionContext'
+import QuestionContext from "../../context/question/questionContext";
 
 const useSytles = makeStyles(theme => ({
   card: {
     maxWidth: 800,
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    marginTop: theme.spacing(3)
   },
   media: {
     height: 0,
@@ -60,8 +61,8 @@ const useSytles = makeStyles(theme => ({
 }));
 
 const QuestionItem = ({ props }) => {
-  const questionContext = useContext(QuestionContext)
-  const {deleteQuestion, updateQuestion} = questionContext 
+  const questionContext = useContext(QuestionContext);
+  const { deleteQuestion, updateQuestion } = questionContext;
   const { answered, id, type, title, craeteDate, options } = props;
   const classes = useSytles();
   const [optionsa, setOptionsa] = React.useState(options);
@@ -80,7 +81,11 @@ const QuestionItem = ({ props }) => {
   };
 
   const handleUpdateClick = () => {
-    updateQuestion(props)
+    updateQuestion(props);
+  };
+
+  const handleDeleteClick = () => {
+    deleteQuestion(id);
   };
   return (
     <Card className={classes.card}>
@@ -188,6 +193,7 @@ const QuestionItem = ({ props }) => {
           size="small"
           style={{ height: 26, width: 40, margin: 8 }}
           className={classes.normal}
+          onClick={handleDeleteClick}
         >
           修改1
           <Edit fontSize="small" style={{ fontSize: 14, paddingLeft: 4 }} />
