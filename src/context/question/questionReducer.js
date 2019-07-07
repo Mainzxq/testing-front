@@ -15,6 +15,7 @@ export default (state, action) => {
         if (action.payload.id === que.id) {
           que = action.payload;
         }
+        return que.id;
       });
       return {
         ...state,

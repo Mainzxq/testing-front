@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
@@ -6,7 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import {Home} from '@material-ui/icons'
+import { Home } from "@material-ui/icons";
+import Login from "../pages/Login";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +25,13 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () => {
   const classes = useStyles();
+  const [isopen, setIsopen] = useState(false);
+
+  const handleOpenLogin = () => {
+    setIsopen(!isopen);
+
+    console.log("Nav状态", isopen);
+  };
 
   return (
     <div className={classes.root}>
@@ -41,16 +49,19 @@ const Navbar = () => {
             {/* <AllInbox /> */}
             南玻岛
           </Typography>
-          <Button color="inherit" href="/" >
+          <Button color="inherit" href="/">
             <Home fontSize="small" />
             首页
           </Button>
           <Button color="inherit" href="/about">
             关于
           </Button>
-          <Button color="inherit">登陆</Button>
+          <Button color="inherit" onClick={handleOpenLogin}>
+            Login
+          </Button>
         </ToolBar>
       </AppBar>
+      <Login isopen={isopen} handleOpenLogin={handleOpenLogin} />
     </div>
   );
 };

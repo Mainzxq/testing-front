@@ -119,7 +119,8 @@ const QuestionState = props => {
       value={{
         questions: state.questions,
         updateQuestion,
-        deleteQuestion
+        deleteQuestion,
+        createQuestion
       }}
     >
       {props.children}
