@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AccountCircle } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { Button, Dialog, TextField } from "@material-ui/core";
+import AuthContext from "../../context/auth/authContext";
 
 const userStyles = makeStyles(theme => ({
   container: {
@@ -39,15 +40,32 @@ const userStyles = makeStyles(theme => ({
 
 const Login = props => {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState({
+    username: "",
+    password: ""
+  });
+  const authContext = useContext(AuthContext);
+  const { askForLogin } = authContext;
+  const { username, password } = user;
   const { isopen, handleOpenLogin } = props;
   const classes = userStyles();
   const fieldclass = classes.textfield;
   useEffect(() => {
     setOpen(isopen);
-  }, [props,isopen]);
+  }, [props, isopen]);
 
   const handleClickClose = () => {
     handleOpenLogin();
+  };
+
+  const onChange = e => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const submitAuth = e => {
+    e.preventDefault();
+    console.log(e.target);
+    askForLogin(user);
   };
 
   return (
@@ -66,7 +84,7 @@ const Login = props => {
           <Typography component="h1" varian="h6">
             南玻岛用户登录
           </Typography>
-          <form noValidate className={classes.form}>
+          <form noValidate className={classes.form} onSubmit={submitAuth}>
             <TextField
               InputProps={{ fieldclass }}
               variant="outlined"
@@ -78,6 +96,8 @@ const Login = props => {
               name="username"
               autoComplete="username"
               autoFocus
+              value={username}
+              onChange={onChange}
             />
             <TextField
               InputProps={{ fieldclass }}
@@ -90,6 +110,8 @@ const Login = props => {
               name="password"
               type="password"
               autoComplete="password"
+              value={password}
+              onChange={onChange}
             />
 
             <Button
@@ -97,6 +119,7 @@ const Login = props => {
               fullWidth
               color="primary"
               className={classes.button}
+              type="submit"
             >
               登录
             </Button>

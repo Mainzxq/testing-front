@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useReducer } from "react";
 import axios from "axios";
 import authContext from "./authContext";
 import authReducer from "./authReducer";
@@ -18,6 +18,7 @@ const AuthState = props => {
   // 登陆验证
   const askForLogin = async data => {
     const res = await axios.post("http://106.13.7.75:3000/login", data);
+    console.log(res);
     dispatch({ type: ASK_FOR_LOGIN, payload: res });
   };
 
