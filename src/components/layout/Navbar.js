@@ -29,8 +29,6 @@ const Navbar = () => {
 
   const handleOpenLogin = () => {
     setIsopen(!isopen);
-
-    console.log("Nav状态", isopen);
   };
 
   return (

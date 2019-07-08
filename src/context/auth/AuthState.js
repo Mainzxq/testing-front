@@ -3,7 +3,6 @@ import axios from "axios";
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 import { ASK_FOR_AUTH, ASK_FOR_LOGIN } from "../types";
-import { async } from "q";
 
 const AuthState = props => {
   const initialState = {
@@ -17,9 +16,28 @@ const AuthState = props => {
 
   // 登陆验证
   const askForLogin = async data => {
-    const res = await axios.post("http://106.13.7.75:3000/login", data);
-    console.log(res);
-    dispatch({ type: ASK_FOR_LOGIN, payload: res });
+    const option = {
+      headers: {
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "application/json",
+        "Content-Type": "application/json"
+      }
+    };
+    console.log(data);
+    try {
+      const res = await axios.post(
+        // "http://106.13.7.75:3000/login",
+        "http://localhost:3001/login",
+        data,
+        option
+      );
+      localStorage.setItem("token", res.data.token);
+      dispatch({ type: ASK_FOR_LOGIN, payload: res });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

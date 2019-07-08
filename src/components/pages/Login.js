@@ -41,12 +41,12 @@ const userStyles = makeStyles(theme => ({
 const Login = props => {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState({
-    username: "",
+    name: "",
     password: ""
   });
   const authContext = useContext(AuthContext);
   const { askForLogin } = authContext;
-  const { username, password } = user;
+  const { name, password } = user;
   const { isopen, handleOpenLogin } = props;
   const classes = userStyles();
   const fieldclass = classes.textfield;
@@ -66,6 +66,7 @@ const Login = props => {
     e.preventDefault();
     console.log(e.target);
     askForLogin(user);
+    handleOpenLogin();
   };
 
   return (
@@ -91,12 +92,12 @@ const Login = props => {
               margin="dense"
               required
               fullWidth
-              id="username"
+              id="name"
               label="用户名"
-              name="username"
-              autoComplete="username"
+              name="name"
+              autoComplete="name"
               autoFocus
-              value={username}
+              value={name}
               onChange={onChange}
             />
             <TextField
