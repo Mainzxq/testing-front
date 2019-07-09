@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -13,6 +13,7 @@ import Login from "../pages/Login";
 import AuthContext from "../../context/auth/authContext";
 import { Avatar } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
+import axios from "axios";
 
 const menuList = ["关于", "查看", "管理"];
 
@@ -51,11 +52,37 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isopen, setIsopen] = useState(false);
   const authContext = useContext(AuthContext);
-  const { state } = authContext;
+  const { isAuthenticated, askForAuth, askForUser, askForLogout } = authContext;
   const open = Boolean(anchorEl);
+
   const handleOpenLogin = () => {
     setIsopen(!isopen);
   };
+
+  useEffect(() => {
+    if (localStorage.token && !isAuthenticated) {
+      axios
+        .get(`http://10.199.172.142:3001/users/auth/${localStorage.token}`)
+        .then((res, err) => {
+          console.log(res.data);
+          if (!err) {
+            askForAuth(localStorage.token);
+          }
+          axios
+            .get(`http://10.199.172.142:3001/users/${res.data._id}`)
+            .then((res, err) => {
+              console.log(res.data);
+              if (!err) {
+                askForUser(res.data);
+              }
+            });
+        });
+    }
+  });
+
+  const handleLogOut = () => {
+    askForLogout()
+  }
 
   const handleClick = e => {
     setAnchorEl(e.currentTarget);
@@ -89,13 +116,9 @@ const Navbar = () => {
             <Button component={AdapterLink} color="inherit" href="/about">
               关于
             </Button>
-            {state.isAuthenticated ? (
-              <Button color="inherit">查看</Button>
-            ) : null}
-            {state.isAuthenticated ? (
-              <Button color="inherit">管理</Button>
-            ) : null}
-            {state.isAuthenticated ? (
+            {isAuthenticated ? <Button color="inherit">管理</Button> : null}
+            {isAuthenticated ? <Button color="inherit" onClick={handleLogOut}>退出</Button> : null}
+            {isAuthenticated ? (
               <Avatar style={{ margin: 10, width: 32, height: 32 }} />
             ) : (
               <Button color="inherit" onClick={handleOpenLogin}>
@@ -104,7 +127,7 @@ const Navbar = () => {
             )}
           </div>
           <div className={classes.sectionMobile}>
-            {state.isAuthenticated ? (
+            {isAuthenticated ? (
               <div>
                 <Avatar
                   style={{ margin: 10, width: 32, height: 32 }}

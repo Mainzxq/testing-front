@@ -41,6 +41,11 @@ const Home = () => {
     setValue(event.target.value);
   };
 
+  const handleKeyUp = e => {
+    if (e.keyCode === 13) {
+      handleSeach();
+    }
+  };
   const handleSeach = () => {
     searchByTitle(value);
   };
@@ -63,6 +68,7 @@ const Home = () => {
               autoComplete="aaaaaa"
               margin="normal"
               onChange={handleChange}
+              onKeyUp={handleKeyUp}
             />
           </Grid>
           <Grid item>

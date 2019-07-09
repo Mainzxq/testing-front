@@ -66,6 +66,7 @@ const Login = props => {
     e.preventDefault();
     console.log(e.target);
     askForLogin(user);
+    console.log("正在登陆")
     handleOpenLogin();
   };
 

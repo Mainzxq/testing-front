@@ -85,7 +85,11 @@ const QuestionItem = ({ props }) => {
   };
 
   const handleUpdateClick = () => {
-    props.answered = true;
+    if (props.options.filter(item => item.isRight).length === 0) {
+      props.answered = false;
+    } else {
+      props.answered = true;
+    }
     updateQuestion(props);
   };
 
@@ -183,7 +187,7 @@ const QuestionItem = ({ props }) => {
           </RadioGroup>
         </FormControl>
       </CardContent>
-
+      {isAuthenticated?
       <div style={{ float: "right" }}>
         <Button
           size="small"
@@ -203,7 +207,7 @@ const QuestionItem = ({ props }) => {
           删除
           <Delete fontSize="small" style={{ fontSize: 16, paddingLeft: 4 }} />
         </Button>
-      </div>
+      </div>:""}
     </Card>
   );
 };

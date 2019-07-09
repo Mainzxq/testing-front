@@ -7,7 +7,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import QuestionState from "./context/question/QuestionState";
 import AuthState from "./context/auth/AuthState";
 import "typeface-noto-sans-sc";
+import setAuthToken from "./utiles/setAuthToken";
 // import "./App.css";
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (

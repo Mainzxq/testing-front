@@ -2,10 +2,9 @@ import React, { useContext } from "react";
 import {
   Check,
   Edit,
-  RadioButtonChecked,
-  RadioButtonUnchecked,
   Delete,
-  CheckBox
+  CheckBox as CheckBoxIcon,
+  CheckBoxOutlineBlank
 } from "@material-ui/icons";
 import {
   Card,
@@ -13,14 +12,13 @@ import {
   CardContent,
   Avatar,
   Chip,
-  Radio,
   FormControl,
   FormLabel,
   FormControlLabel,
-  RadioGroup,
   Typography,
   Button,
-  Divider
+  Divider,
+  Checkbox
 } from "@material-ui/core";
 import { indigo } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
@@ -80,11 +78,15 @@ const MultiQuestion = ({ props }) => {
       return item.id;
     });
     setOptionsa({ options });
-    console.log(e.target.value);
   };
 
   const handleUpdateClick = () => {
-    props.answered = true;
+    if (props.options.filter(item => item.isRight).length === 0) {
+      props.answered = false;
+    } else {
+      props.answered = true;
+    }
+
     updateQuestion(props);
   };
 
@@ -143,10 +145,12 @@ const MultiQuestion = ({ props }) => {
               <FormControlLabel
                 key={item.id}
                 control={
-                  <CheckBox
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlank />}
+                    checkedIcon={<CheckBoxIcon />}
                     color="primary"
                     fontSize="small"
-                    disabled={false}
+                    disabled={!isAuthenticated}
                     checked={item.isRight}
                     onChange={handleChange}
                   />
@@ -170,7 +174,7 @@ const MultiQuestion = ({ props }) => {
           ))}
         </FormControl>
       </CardContent>
-
+      {isAuthenticated?
       <div style={{ float: "right" }}>
         <Button
           size="small"
@@ -190,7 +194,7 @@ const MultiQuestion = ({ props }) => {
           删除
           <Delete fontSize="small" style={{ fontSize: 16, paddingLeft: 4 }} />
         </Button>
-      </div>
+      </div>:""}
     </Card>
   );
 };

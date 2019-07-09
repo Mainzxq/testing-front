@@ -1,8 +1,13 @@
-import React, { useContext, useReducer } from "react";
+import React, { useReducer } from "react";
 import axios from "axios";
 import authContext from "./authContext";
 import authReducer from "./authReducer";
-import { ASK_FOR_AUTH, ASK_FOR_LOGIN } from "../types";
+import {
+  ASK_FOR_AUTH,
+  ASK_FOR_LOGIN,
+  ASK_FOR_USER,
+  ASK_FOR_LOGOUT
+} from "../types";
 
 const AuthState = props => {
   const initialState = {
@@ -25,11 +30,10 @@ const AuthState = props => {
         "Content-Type": "application/json"
       }
     };
-    console.log(data);
     try {
       const res = await axios.post(
         // "http://106.13.7.75:3000/login",
-        "http://localhost:3001/login",
+        "http://10.199.172.142:3001/login",
         data,
         option
       );
@@ -38,7 +42,7 @@ const AuthState = props => {
         dispatch({
           type: ASK_FOR_LOGIN,
           payload: res.data.token,
-          user: data.name
+          user: res.data.user
         });
       } else {
         console.log(res);
@@ -48,12 +52,27 @@ const AuthState = props => {
     }
   };
 
+  const askForAuth = tokens => {
+    dispatch({ type: ASK_FOR_AUTH, token: tokens });
+  };
+
+  const askForUser = user => {
+    dispatch({ type: ASK_FOR_USER, payload: user });
+  };
+
+  const askForLogout = () => {
+    dispatch({type: ASK_FOR_LOGOUT})
+  }
+
   return (
     <authContext.Provider
       value={{
         state,
         isAuthenticated: state.isAuthenticated,
-        askForLogin
+        askForLogin,
+        askForAuth,
+        askForUser,
+        askForLogout
       }}
     >
       {props.children}
