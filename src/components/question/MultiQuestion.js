@@ -4,7 +4,8 @@ import {
   Edit,
   RadioButtonChecked,
   RadioButtonUnchecked,
-  Delete
+  Delete,
+  CheckBox
 } from "@material-ui/icons";
 import {
   Card,
@@ -62,7 +63,7 @@ const useSytles = makeStyles(theme => ({
   }
 }));
 
-const QuestionItem = ({ props }) => {
+const MultiQuestion = ({ props }) => {
   const questionContext = useContext(QuestionContext);
   const authContext = useContext(AuthContext);
   const { isAuthenticated } = authContext;
@@ -74,14 +75,12 @@ const QuestionItem = ({ props }) => {
   const handleChange = e => {
     options.map(item => {
       if (item.id === e.target.value) {
-        item.isRight = true;
-      } else {
-        item.isRight = false;
+        item.isRight = e.target.checked;
       }
       return item.id;
     });
     setOptionsa({ options });
-    console.log(e.target);
+    console.log(e.target.value);
   };
 
   const handleUpdateClick = () => {
@@ -139,48 +138,36 @@ const QuestionItem = ({ props }) => {
           <FormLabel component="legend" className={classes.normal}>
             请选择答案：
           </FormLabel>
-          <RadioGroup
-            aria-label="position"
-            name={id}
-            value={optionsa.id}
-            onChange={handleChange}
-          >
-            {options.map(item => (
-              <div key={item._id}>
-                <FormControlLabel
-                  key={item.id}
-                  control={
-                    <Radio
-                      color="primary"
-                      fontSize="small"
-                      icon={<RadioButtonUnchecked fontSize="small" />}
-                      checkedIcon={<RadioButtonChecked fontSize="small" />}
-                      disabled={!isAuthenticated}
-                      checked={item.isRight}
-                    />
-                  }
-                  value={item.id}
-                  label={
-                    <Typography className={classes.normal}>
-                      {item.text
-                        .replace("&lt;p&gt;", "")
-                        .replace("&lt;/p&gt;", "")}
-                    </Typography>
-                  }
-                  labelPlacement="end"
-                />
-                {item.isRight ? (
-                  <Check
-                    htmlColor="green"
+          {options.map(item => (
+            <div key={item._id}>
+              <FormControlLabel
+                key={item.id}
+                control={
+                  <CheckBox
+                    color="primary"
                     fontSize="small"
-                    viewBox="0 0 24 12"
+                    disabled={false}
+                    checked={item.isRight}
+                    onChange={handleChange}
                   />
-                ) : (
-                  ""
-                )}
-              </div>
-            ))}
-          </RadioGroup>
+                }
+                value={item.id}
+                label={
+                  <Typography className={classes.normal}>
+                    {item.text
+                      .replace("&lt;p&gt;", "")
+                      .replace("&lt;/p&gt;", "")}
+                  </Typography>
+                }
+                labelPlacement="end"
+              />
+              {item.isRight ? (
+                <Check htmlColor="green" fontSize="small" viewBox="0 0 24 12" />
+              ) : (
+                ""
+              )}
+            </div>
+          ))}
         </FormControl>
       </CardContent>
 
@@ -208,6 +195,4 @@ const QuestionItem = ({ props }) => {
   );
 };
 
-QuestionItem.propTypes = {};
-
-export default QuestionItem;
+export default MultiQuestion;

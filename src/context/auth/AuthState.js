@@ -33,8 +33,16 @@ const AuthState = props => {
         data,
         option
       );
-      localStorage.setItem("token", res.data.token);
-      dispatch({ type: ASK_FOR_LOGIN, payload: res });
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+        dispatch({
+          type: ASK_FOR_LOGIN,
+          payload: res.data.token,
+          user: data.name
+        });
+      } else {
+        console.log(res);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -44,6 +52,7 @@ const AuthState = props => {
     <authContext.Provider
       value={{
         state,
+        isAuthenticated: state.isAuthenticated,
         askForLogin
       }}
     >

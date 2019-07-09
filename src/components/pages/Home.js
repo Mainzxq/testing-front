@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Button, Grid } from "@material-ui/core";
 import { SearchRounded } from "@material-ui/icons";
 import Questions from "../question/Question";
+import QuestionContext from "../../context/question/questionContext";
 
 const userStyles = makeStyles(theme => ({
   root: {
@@ -14,7 +15,6 @@ const userStyles = makeStyles(theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap"
-
   },
   button: {
     margin: theme.spacing(1),
@@ -31,17 +31,18 @@ const textStyles = makeStyles(theme => ({
 }));
 
 const Home = () => {
+  const questionContext = useContext(QuestionContext);
+  const { searchByTitle } = questionContext;
   const classes = userStyles();
   const textclass = textStyles();
-  const [values, setValues] = useState({
-    name: "Cat in the Hat",
-    age: "",
-    multiline: "Controlled",
-    currency: "Eur"
-  });
+  const [value, setValue] = useState(null);
 
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+  const handleChange = event => {
+    setValue(event.target.value);
+  };
+
+  const handleSeach = () => {
+    searchByTitle(value);
   };
 
   return (
@@ -61,7 +62,7 @@ const Home = () => {
               label="输入你要找的东西"
               autoComplete="aaaaaa"
               margin="normal"
-              onChange={handleChange("name")}
+              onChange={handleChange}
             />
           </Grid>
           <Grid item>
@@ -69,7 +70,7 @@ const Home = () => {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={()=>{}}
+              onClick={handleSeach}
             >
               我要查询
             </Button>

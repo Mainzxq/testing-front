@@ -10,7 +10,7 @@ import {
   SEARCH_QUESTION_BY_TYPE,
   UPDATE_QUESTION
 } from "../types";
-
+import axios from "axios";
 
 const QuestionState = props => {
   const initialState = {
@@ -96,21 +96,41 @@ const QuestionState = props => {
 
   const [state, dispatch] = useReducer(questionReducer, initialState);
 
-  // search question
+  // search question by title
+  const searchByTitle = async title => {
+    const option = {
+      headers: {
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "application/json",
+        "Content-Type": "application/json"
+      }
+    };
+    try {
+      const res = await axios(
+        `http://localhost:3001/question/title?keywords=${title}`,
+        option
+      );
+      dispatch({ type: SEARCH_QUESTION_BY_TITLE, questions: res.data });
+    } catch (err) {
+      console.error(err);
+    }
+  };
   // update question
   const updateQuestion = question => {
     dispatch({ type: UPDATE_QUESTION, payload: question });
   };
 
   const deleteQuestion = id => {
-    dispatch({type: DELETE_QUESTION, payload: id})
-  }
+    dispatch({ type: DELETE_QUESTION, payload: id });
+  };
 
   const createQuestion = question => {
-    const id = uuid.v4()
-    question.id = "q" + state.questions.length() + id
-    dispatch({type: CREATE_QUESTION, payload: question})
-  }
+    const id = uuid.v4();
+    question.id = "q" + state.questions.length() + id;
+    dispatch({ type: CREATE_QUESTION, payload: question });
+  };
   // create question
   // delete question
 
@@ -120,7 +140,8 @@ const QuestionState = props => {
         questions: state.questions,
         updateQuestion,
         deleteQuestion,
-        createQuestion
+        createQuestion,
+        searchByTitle
       }}
     >
       {props.children}

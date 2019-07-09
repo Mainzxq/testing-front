@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +10,11 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Home } from "@material-ui/icons";
 import Login from "../pages/Login";
+import AuthContext from "../../context/auth/authContext";
+import { Avatar } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
+
+const menuList = ["关于", "查看", "管理"];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,15 +27,42 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex"
+    }
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none"
+    }
   }
 }));
 
+const AdapterLink = React.forwardRef((props, ref) => (
+  <RouterLink innerRef={ref} to={props.href} {...props} />
+));
+
 const Navbar = () => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
   const [isopen, setIsopen] = useState(false);
-
+  const authContext = useContext(AuthContext);
+  const { state } = authContext;
+  const open = Boolean(anchorEl);
   const handleOpenLogin = () => {
     setIsopen(!isopen);
+  };
+
+  const handleClick = e => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -47,16 +81,49 @@ const Navbar = () => {
             {/* <AllInbox /> */}
             南玻岛
           </Typography>
-          <Button color="inherit" href="/">
-            <Home fontSize="small" />
-            首页
-          </Button>
-          <Button color="inherit" href="/about">
-            关于
-          </Button>
-          <Button color="inherit" onClick={handleOpenLogin}>
-            Login
-          </Button>
+          <div className={classes.sectionDesktop}>
+            <Button component={AdapterLink} color="inherit" href="/">
+              <Home fontSize="small" />
+              首页
+            </Button>
+            <Button component={AdapterLink} color="inherit" href="/about">
+              关于
+            </Button>
+            {state.isAuthenticated ? (
+              <Button color="inherit">查看</Button>
+            ) : null}
+            {state.isAuthenticated ? (
+              <Button color="inherit">管理</Button>
+            ) : null}
+            {state.isAuthenticated ? (
+              <Avatar style={{ margin: 10, width: 32, height: 32 }} />
+            ) : (
+              <Button color="inherit" onClick={handleOpenLogin}>
+                Login
+              </Button>
+            )}
+          </div>
+          <div className={classes.sectionMobile}>
+            {state.isAuthenticated ? (
+              <div>
+                <Avatar
+                  style={{ margin: 10, width: 32, height: 32 }}
+                  onClick={handleClick}
+                />
+                <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                  {menuList.map(item => (
+                    <MenuItem key={item} onClick={handleClose}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </div>
+            ) : (
+              <Button color="inherit" onClick={handleOpenLogin}>
+                Login
+              </Button>
+            )}
+          </div>
         </ToolBar>
       </AppBar>
       <Login isopen={isopen} handleOpenLogin={handleOpenLogin} />

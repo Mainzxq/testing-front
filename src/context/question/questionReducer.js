@@ -9,6 +9,8 @@ import {
 
 export default (state, action) => {
   switch (action.type) {
+    case SEARCH_QUESTION_BY_TITLE:
+      return { ...state, questions: action.questions };
     case UPDATE_QUESTION:
       const newQuestions = state.questions;
       newQuestions.map(que => {

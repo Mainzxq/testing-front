@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
@@ -11,22 +11,20 @@ import "typeface-noto-sans-sc";
 
 const App = () => {
   return (
-    <QuestionState>
-      <AuthState>
+    <AuthState>
+      <QuestionState>
+        <CssBaseline />
         <Router>
-          <Fragment>
-            <CssBaseline />
-            <Navbar />
-            <div style={{ fontFamily: "Noto Sans sc", marginTop: 16 }}>
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/about" component={About} />
-              </Switch>
-            </div>
-          </Fragment>
+          <Navbar />
+          <div style={{ fontFamily: "Noto Sans sc", marginTop: 16 }}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/about" component={About} />
+            </Switch>
+          </div>
         </Router>
-      </AuthState>
-    </QuestionState>
+      </QuestionState>
+    </AuthState>
   );
 };
 
