@@ -53,13 +53,24 @@ const Home = () => {
   return (
     <div className={classes.root}>
       <Container>
-        <h1>南玻岛查询</h1>
-        <p>孝顺，上进，完成工作</p>
-        <Grid container spacing={1} alignItems="flex-end">
+        <Grid
+          container
+          alignItems="center"
+          justify="center"
+          direction="column"
+        >
+          <Grid item>
+            <h1>南玻岛查询</h1>
+          </Grid>
+          <Grid item>
+            <p>孤峰绝岛俨相向，鬼啸猿啼垂女萝。</p>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} alignItems="flex-end" justify="center">
           <Grid item>
             <SearchRounded />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={6}>
             <TextField
               fullWidth
               inputProps={{ textclass }}
