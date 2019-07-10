@@ -11,6 +11,7 @@ export default (state, action) => {
   switch (action.type) {
     case SEARCH_QUESTION_BY_TITLE:
       return { ...state, questions: action.questions };
+
     case UPDATE_QUESTION:
       const newQuestions = state.questions;
       newQuestions.map(que => {
@@ -29,6 +30,7 @@ export default (state, action) => {
         ...state,
         questions: state.questions.filter(item => item.id !== action.payload)
       };
+
     default:
       return state;
   }
