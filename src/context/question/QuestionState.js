@@ -33,7 +33,7 @@ const QuestionState = props => {
     };
     try {
       const res = await axios.get(
-        `http://10.199.172.142:3001/question/title?keywords=${title}`,
+        `http://api.gosccba.cn/question/title?keywords=${title}`,
         option
       );
       dispatch({ type: SEARCH_QUESTION_BY_TITLE, questions: res.data });
@@ -57,7 +57,7 @@ const QuestionState = props => {
     };
     try {
       const res = await axios.patch(
-        `http://10.199.172.142:3001/question/update/${question.id}`,
+        `http://api.gosccba.cn/question/update/${question.id}`,
         question,
         option
       );

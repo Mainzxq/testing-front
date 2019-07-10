@@ -62,14 +62,14 @@ const Navbar = () => {
   useEffect(() => {
     if (localStorage.token && !isAuthenticated) {
       axios
-        .get(`http://10.199.172.142:3001/users/auth/${localStorage.token}`)
+        .get(`http://api.gosccba.cn/users/auth/${localStorage.token}`)
         .then((res, err) => {
           console.log(res.data);
           if (!err) {
             askForAuth(localStorage.token);
           }
           axios
-            .get(`http://10.199.172.142:3001/users/${res.data._id}`)
+            .get(`http://api.gosccba.cn/users/${res.data._id}`)
             .then((res, err) => {
               console.log(res.data);
               if (!err) {

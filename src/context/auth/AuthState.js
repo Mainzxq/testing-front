@@ -33,7 +33,7 @@ const AuthState = props => {
     try {
       const res = await axios.post(
         // "http://106.13.7.75:3000/login",
-        "http://10.199.172.142:3001/login",
+        "http://api.gosccba.cn/login",
         data,
         option
       );

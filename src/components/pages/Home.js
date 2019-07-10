@@ -92,8 +92,11 @@ const Home = () => {
               我要查询
             </Button>
           </Grid>
+          <Grid item>
+            <Questions />
+          </Grid>
         </Grid>
-        <Questions />
+       
       </Container>
     </div>
   );
