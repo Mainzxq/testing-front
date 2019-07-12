@@ -20,6 +20,7 @@ const QuestionState = props => {
 
   const [state, dispatch] = useReducer(questionReducer, initialState);
 
+  // search all questions 
   // search question by title
   const searchByTitle = async title => {
     const option = {

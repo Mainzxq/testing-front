@@ -63,27 +63,29 @@ const Navbar = () => {
   useEffect(() => {
     if (localStorage.token && !isAuthenticated) {
       axios
-        .get(`http://api.gosccba.cn/users/auth/${localStorage.token}`, {
-          validateStatus: status => {
-            return status < 500;
-          }
+        .get(`http://api.gosccba.cn/users/auth/${localStorage.token}`)
+        .catch(err => {
+          return err;
         })
-        .then((res, err) => {
-          if (!err) {
+        .then(res => {
+          console.log(res);
+          if (res.status && res.status === 200) {
             askForAuth(localStorage.token);
+          } else {
+            console.log("please login");
           }
-          return res.data;
+          return res;
         })
-        .then((res, err) => {
-          axios
-            .get(`http://api.gosccba.cn/users/${res._id}`)
-            .then((res, err) => {
-              if (res.status !== 401) {
-                askForUser(res.data);
-              } else {
-                reject("Authenticated failed, Please ReLogin!");
-              }
-            });
+        .then(res => {
+          res.status === 200
+            ? axios
+                .get(`http://api.gosccba.cn/users/${res.data._id}`)
+                .then(res => {
+                  if (res.status !== 401) {
+                    askForUser(res.data);
+                  }
+                })
+            : console.log("error");
         });
     }
   });
@@ -124,7 +126,11 @@ const Navbar = () => {
             <Button component={AdapterLink} color="inherit" href="/about">
               关于
             </Button>
-            {isAuthenticated ? <Button color="inherit">管理</Button> : null}
+            {isAuthenticated ? (
+              <Button color="inherit" component={AdapterLink} href="/manage">
+                管理
+              </Button>
+            ) : null}
             {isAuthenticated ? (
               <Button color="inherit" onClick={handleLogOut}>
                 退出
