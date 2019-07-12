@@ -14,6 +14,7 @@ import AuthContext from "../../context/auth/authContext";
 import { Avatar } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
+import { reject } from "q";
 
 const menuList = ["关于", "查看", "管理"];
 
@@ -62,18 +63,25 @@ const Navbar = () => {
   useEffect(() => {
     if (localStorage.token && !isAuthenticated) {
       axios
-        .get(`http://api.gosccba.cn/users/auth/${localStorage.token}`)
+        .get(`http://api.gosccba.cn/users/auth/${localStorage.token}`, {
+          validateStatus: status => {
+            return status < 500;
+          }
+        })
         .then((res, err) => {
-          console.log(res.data);
           if (!err) {
             askForAuth(localStorage.token);
           }
+          return res.data;
+        })
+        .then((res, err) => {
           axios
-            .get(`http://api.gosccba.cn/users/${res.data._id}`)
+            .get(`http://api.gosccba.cn/users/${res._id}`)
             .then((res, err) => {
-              console.log(res.data);
-              if (!err) {
+              if (res.status !== 401) {
                 askForUser(res.data);
+              } else {
+                reject("Authenticated failed, Please ReLogin!");
               }
             });
         });
@@ -81,8 +89,8 @@ const Navbar = () => {
   });
 
   const handleLogOut = () => {
-    askForLogout()
-  }
+    askForLogout();
+  };
 
   const handleClick = e => {
     setAnchorEl(e.currentTarget);
@@ -117,7 +125,11 @@ const Navbar = () => {
               关于
             </Button>
             {isAuthenticated ? <Button color="inherit">管理</Button> : null}
-            {isAuthenticated ? <Button color="inherit" onClick={handleLogOut}>退出</Button> : null}
+            {isAuthenticated ? (
+              <Button color="inherit" onClick={handleLogOut}>
+                退出
+              </Button>
+            ) : null}
             {isAuthenticated ? (
               <Avatar style={{ margin: 10, width: 32, height: 32 }} />
             ) : (

@@ -58,7 +58,8 @@ const useSytles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: indigo[500]
+    backgroundColor: indigo[500],
+    fontSize: 12
   }
 }));
 
@@ -100,8 +101,10 @@ const QuestionItem = ({ props }) => {
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="Recipe" className={classes.avatar}>
-            {id.split("-")[0].toUpperCase() + id.split("-")[1]}
+          <Avatar aria-label="Recipe" className={classes.avatar} >
+            <Typography component="p" variant="h6" style={{fontSize:12}}>
+              {id.split("-")[0].toUpperCase() + id.split("-")[1]}
+            </Typography>
           </Avatar>
         }
         // action={
@@ -187,27 +190,30 @@ const QuestionItem = ({ props }) => {
           </RadioGroup>
         </FormControl>
       </CardContent>
-      {isAuthenticated?
-      <div style={{ float: "right" }}>
-        <Button
-          size="small"
-          style={{ height: 26, width: 40, margin: 8 }}
-          className={classes.normal}
-          onClick={handleUpdateClick}
-        >
-          修改
-          <Edit fontSize="small" style={{ fontSize: 14, paddingLeft: 4 }} />
-        </Button>
-        <Button
-          size="small"
-          style={{ height: 26, width: 40, margin: 8 }}
-          className={classes.normal}
-          onClick={handleDeleteClick}
-        >
-          删除
-          <Delete fontSize="small" style={{ fontSize: 16, paddingLeft: 4 }} />
-        </Button>
-      </div>:""}
+      {isAuthenticated ? (
+        <div style={{ float: "right" }}>
+          <Button
+            size="small"
+            style={{ height: 26, width: 40, margin: 8 }}
+            className={classes.normal}
+            onClick={handleUpdateClick}
+          >
+            修改
+            <Edit fontSize="small" style={{ fontSize: 14, paddingLeft: 4 }} />
+          </Button>
+          <Button
+            size="small"
+            style={{ height: 26, width: 40, margin: 8 }}
+            className={classes.normal}
+            onClick={handleDeleteClick}
+          >
+            删除
+            <Delete fontSize="small" style={{ fontSize: 16, paddingLeft: 4 }} />
+          </Button>
+        </div>
+      ) : (
+        ""
+      )}
     </Card>
   );
 };

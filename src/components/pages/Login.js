@@ -64,9 +64,7 @@ const Login = props => {
 
   const submitAuth = e => {
     e.preventDefault();
-    console.log(e.target);
     askForLogin(user);
-    console.log("正在登陆")
     handleOpenLogin();
   };
 
