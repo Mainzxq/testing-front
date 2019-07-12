@@ -71,21 +71,17 @@ const Navbar = () => {
           console.log(res);
           if (res.status && res.status === 200) {
             askForAuth(localStorage.token);
+            return res;
           } else {
             console.log("please login");
           }
-          return res;
         })
         .then(res => {
-          res.status === 200
-            ? axios
-                .get(`http://api.gosccba.cn/users/${res.data._id}`)
-                .then(res => {
-                  if (res.status !== 401) {
-                    askForUser(res.data);
-                  }
-                })
-            : console.log("error");
+          axios.get(`http://api.gosccba.cn/users/${res.data._id}`).then(res => {
+            if (res.status !== 401) {
+              askForUser(res.data);
+            }
+          });
         });
     }
   });
