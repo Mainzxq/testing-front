@@ -11,7 +11,8 @@ export default (state, action) => {
   switch (action.type) {
     case SEARCH_QUESTION_BY_TITLE:
       return { ...state, questions: action.questions };
-
+    case SEARCH_QUESTION: 
+      return {...state, questions: action.payload}
     case UPDATE_QUESTION:
       const newQuestions = state.questions;
       newQuestions.map(que => {

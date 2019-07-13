@@ -20,7 +20,14 @@ const QuestionState = props => {
 
   const [state, dispatch] = useReducer(questionReducer, initialState);
 
-  // search all questions 
+  // search all questions
+
+  const searchQuestion = async () => {
+    const res = await axios.get(`http://api.gosccba.cn/question`);
+    console.log(res.data);
+    dispatch({ type: SEARCH_QUESTION, payload: res.data });
+  };
+
   // search question by title
   const searchByTitle = async title => {
     const option = {
@@ -89,7 +96,8 @@ const QuestionState = props => {
         updateQuestion,
         deleteQuestion,
         createQuestion,
-        searchByTitle
+        searchByTitle,
+        searchQuestion
       }}
     >
       {props.children}

@@ -14,7 +14,6 @@ import AuthContext from "../../context/auth/authContext";
 import { Avatar } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
-import { reject } from "q";
 
 const menuList = ["关于", "查看", "管理"];
 
