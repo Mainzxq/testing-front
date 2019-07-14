@@ -1,54 +1,36 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
-import QuestionContext from "../../context/question/questionContext";
+import React, { Fragment, useContext, useEffect } from "react";
+import ManageContext from "../../context/manage/manageContext";
 import QuestionItem from "../question/QuestionItem";
 import MultiQuestion from "../question/MultiQuestion";
 import { Grid, Button } from "@material-ui/core";
+import axios from "axios";
 
 const ManageQestion = () => {
-  const questionContext = useContext(QuestionContext);
-  const { questions, searchQuestion } = questionContext;
-  const [state, setState] = useState({
-    begins: 0,
-    steps: 5,
-    count: 0,
-    pages: 0,
-    current:1,
-    loadQuestion: false
-  });
-  useEffect(() => {
-    if (!state.loadQuestion) {
-      searchQuestion();
-    }
-    return () => {
-      //const pages = questions.length % state.steps
+  const manageContext = useContext(ManageContext);
+  const { loadDefaultQuestion, state } = manageContext;
+  const { questionSlice, pages, currentPage, steps } = state;
 
-      setState({
-        ...state,
-        loadQuestion: true,
-        count: questions.length,
-        pages: parseInt(questions.length / 5) + 1
-      });
-    };
-  }, [searchQuestion, questions]);
+  useEffect(() => {
+    loadDefaultQuestion();
+    return () => {};
+  });
   const makeForward = () => {
     console.log(state);
-    console.log(questions.length);
+    console.log(questionSlice.length);
   };
 
   return (
     <Fragment>
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item>
-          {questions &&
-            questions
-              .slice(state.begins, state.steps)
-              .map(question =>
-                question.type === "radio" ? (
-                  <QuestionItem key={question.id} props={question} />
-                ) : (
-                  <MultiQuestion key={question.id} props={question} />
-                )
-              )}
+          {questionSlice &&
+            questionSlice.map(question =>
+              question.type === "radio" ? (
+                <QuestionItem key={question.id} props={question} />
+              ) : (
+                <MultiQuestion key={question.id} props={question} />
+              )
+            )}
         </Grid>
 
         <Grid item>

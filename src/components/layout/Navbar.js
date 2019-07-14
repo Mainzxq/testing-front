@@ -55,35 +55,15 @@ const Navbar = () => {
   const { isAuthenticated, askForAuth, askForUser, askForLogout } = authContext;
   const open = Boolean(anchorEl);
 
+  useEffect(() => {
+    if(localStorage.token && !isAuthenticated) {
+      askForAuth(localStorage.token)
+    }
+  })
+
   const handleOpenLogin = () => {
     setIsopen(!isopen);
   };
-
-  useEffect(() => {
-    if (localStorage.token && !isAuthenticated) {
-      axios
-        .get(`http://api.gosccba.cn/users/auth/${localStorage.token}`)
-        .catch(err => {
-          return err;
-        })
-        .then(res => {
-          console.log(res);
-          if (res.status && res.status === 200) {
-            askForAuth(localStorage.token);
-            return res;
-          } else {
-            console.log("please login");
-          }
-        })
-        .then(res => {
-          axios.get(`http://api.gosccba.cn/users/${res.data._id}`).then(res => {
-            if (res.status !== 401) {
-              askForUser(res.data);
-            }
-          });
-        });
-    }
-  });
 
   const handleLogOut = () => {
     askForLogout();

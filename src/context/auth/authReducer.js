@@ -15,7 +15,7 @@ export default (state, action) => {
         isAuthenticated: true
       };
     case ASK_FOR_AUTH:
-      return { ...state, isAuthenticated: true, token: action.token };
+      return { ...state, isAuthenticated: action.isAuthenticated };
     case ASK_FOR_USER:
       return { ...state, user: action.payload };
     case ASK_FOR_LOGOUT:

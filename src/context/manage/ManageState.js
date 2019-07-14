@@ -1,1 +1,45 @@
 import React, { useReducer } from "react";
+import manageReducer from "./ManageReducer";
+import manageContext from "./manageContext";
+import setAuthToken from "../../utiles/setAuthToken";
+import axios from "axios";
+import { MANAGE_LOAD_DEFAULT_QUESTION } from "../types";
+import QuestionState from "../question/QuestionState";
+
+const ManageState = props => {
+  const initialState = {
+    questionSlice: [],
+    steps: 0,
+    currentPage: 0,
+    pages: 0
+  };
+
+  const [state, dispatch] = useReducer(manageReducer, initialState);
+
+  // 加载默认页
+  const loadDefaultQuestion = async () => {
+    try {
+      const res = await axios.get(
+        "http://api.gosccba.cn/question/slice?currentPage=0&steps=5&type="
+      );
+      dispatch({ type: MANAGE_LOAD_DEFAULT_QUESTION, payload: res.data });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  // 向后一页
+
+  return (
+    <manageContext.Provider
+      value={{
+        state,
+        questionSlice: state.questionSlice,
+        loadDefaultQuestion
+      }}
+    >
+      {props.children}
+    </manageContext.Provider>
+  );
+};
+
+export default ManageState;

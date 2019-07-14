@@ -52,8 +52,31 @@ const AuthState = props => {
     }
   };
 
-  const askForAuth = tokens => {
-    dispatch({ type: ASK_FOR_AUTH, token: tokens });
+  const askForAuth = async token => {
+    const option = {
+      headers: {
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "application/json",
+        "Content-Type": "application/json"
+      }
+    };
+    try {
+      const res = await axios.get(
+        `http://api.gosccba.cn/users/auth/${token}`,
+        option
+      );
+      console.log(res);
+      if(res){
+        dispatch({ type: ASK_FOR_AUTH, isAuthenticated: true });
+      } else {
+        console.log("not login")
+      }
+      
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const askForUser = user => {
@@ -61,8 +84,8 @@ const AuthState = props => {
   };
 
   const askForLogout = () => {
-    dispatch({type: ASK_FOR_LOGOUT})
-  }
+    dispatch({ type: ASK_FOR_LOGOUT });
+  };
 
   return (
     <authContext.Provider
