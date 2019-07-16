@@ -1,30 +1,40 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import ManageContext from "../../context/manage/manageContext";
-import QuestionItem from "../question/QuestionItem";
+import QuestionItem from "./QuestionItem";
 import MultiQuestion from "../question/MultiQuestion";
 import { Grid, Button } from "@material-ui/core";
-import axios from "axios";
 
 const ManageQestion = () => {
   const manageContext = useContext(ManageContext);
   const { loadDefaultQuestion, state } = manageContext;
-  const { questionSlice, pages, currentPage, steps } = state;
-
-  useEffect(() => {
+  // const { questionSlice, pages, currentPage, steps } = state;
+  useState(() => {
     loadDefaultQuestion();
-    return () => {};
   });
+  // const [states, setStates] = useState(state);
+
+  // useEffect(() => {
+  //   setStates(state);
+  //   console.log(states);
+  // }, []);
+
   const makeForward = () => {
     console.log(state);
-    console.log(questionSlice.length);
+    console.log(state.questionSlice.length);
   };
 
   return (
     <Fragment>
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item>
-          {questionSlice &&
-            questionSlice.map(question =>
+          {console.log(state.questionSlice)}
+          {
+            state.questionSlice.map(question =>
               question.type === "radio" ? (
                 <QuestionItem key={question.id} props={question} />
               ) : (
