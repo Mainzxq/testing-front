@@ -5,24 +5,33 @@ import setAuthToken from "../../utiles/setAuthToken";
 import axios from "axios";
 import { MANAGE_LOAD_DEFAULT_QUESTION, MANAGE_UPDATE_QUESTION } from "../types";
 
-
 const ManageState = props => {
   const initialState = {
     questionSlice: [],
     steps: 0,
     currentPage: 0,
-    pages: 0
+    pages: 0,
+    type: ""
   };
 
   const [state, dispatch] = useReducer(ManageReducer, initialState);
 
   // 加载默认页
-  const loadDefaultQuestion = async () => {
+  const loadDefaultQuestion = async item => {
+    if (!item) {
+      item = {
+        currentPage: 0,
+        steps: 5,
+        type: ""
+      };
+    }
     try {
       const res = await axios.get(
-        "http://api.gosccba.cn/question/slice?currentPage=0&steps=5&type="
+        `http://localhost:3001/question/slice?currentPage=${
+          item.currentPage
+        }&steps=${item.steps}&type=${item.type}`
       );
-      console.log("加载成功",res.data)
+      console.log("加载成功", res.data);
       dispatch({ type: MANAGE_LOAD_DEFAULT_QUESTION, payload: res.data });
     } catch (err) {
       console.error(err);

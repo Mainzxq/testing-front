@@ -28,7 +28,7 @@ import AuthContext from "../../context/auth/authContext";
 
 const useSytles = makeStyles(theme => ({
   card: {
-    maxWidth: 800,
+    width: 800,
     margin: theme.spacing(1),
     marginTop: theme.spacing(3)
   },
@@ -82,7 +82,7 @@ const QuestionItem = ({ props }) => {
       }
     });
     console.log(state);
-    setState({...state, options: op });
+    setState({ ...state, options: op });
   };
 
   const handleUpdateClick = () => {

@@ -67,15 +67,14 @@ const AuthState = props => {
         `http://api.gosccba.cn/users/auth/${token}`,
         option
       );
-      console.log(res);
+      
       if(res){
         dispatch({ type: ASK_FOR_AUTH, isAuthenticated: true });
-      } else {
-        console.log("not login")
-      }
-      
+      }      
     } catch (err) {
-      console.error(err);
+      if(err.response && err.response.status === 401) {
+        localStorage.removeItem("token")
+      }
     }
   };
 
