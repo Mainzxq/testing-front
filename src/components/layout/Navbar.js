@@ -13,7 +13,6 @@ import Login from "../pages/Login";
 import AuthContext from "../../context/auth/authContext";
 import { Avatar } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
-import axios from "axios";
 
 const menuList = ["关于", "查看", "管理"];
 
@@ -52,7 +51,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isopen, setIsopen] = useState(false);
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, askForAuth, askForUser, askForLogout } = authContext;
+  const { isAuthenticated, askForAuth, askForLogout } = authContext;
   const open = Boolean(anchorEl);
 
   useEffect(() => {

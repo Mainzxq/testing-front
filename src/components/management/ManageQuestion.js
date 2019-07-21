@@ -1,8 +1,8 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import ManageContext from "../../context/manage/manageContext";
 import QuestionItem from "./QuestionItem";
 import MultiQuestion from "../question/MultiQuestion";
-import { Grid, Button, Typography } from "@material-ui/core";
+import { Grid, Button, Typography, Divider } from "@material-ui/core";
 
 const ManageQestion = () => {
   const manageContext = useContext(ManageContext);
@@ -27,6 +27,15 @@ const ManageQestion = () => {
 
     loadDefaultQuestion(item);
   };
+  const makePrevious = () => {
+    let item = state;
+    if (item.currentPage < state.pages && item.currentPage !== 0) {
+      item.currentPage = state.currentPage - 1;
+      item.type = "";
+    }
+
+    loadDefaultQuestion(item);
+  };
 
   return (
     <Fragment>
@@ -41,15 +50,26 @@ const ManageQestion = () => {
             )
           )}
         </Grid>
-
+        
         <Grid item>
-          <Button>Previous</Button>
-          <span>
-            <Typography variant="h6">
+        <Divider style={{marginTop: 16}}/>
+          <Button
+            onClick={makePrevious}
+            style={{ overflow: "Hidden", float: "left", margin: 4 }}
+          >
+            {"<<<"}
+          </Button>
+          <span style={{ overflow: "Hidden", float: "left", margin: 4 }}>
+            <Typography variant="h6" style={{fontSize: 18, paddingTop: 4}}>
               {state.currentPage}/{state.pages}
             </Typography>
           </span>
-          <Button onClick={makeForward}>Forward</Button>
+          <Button
+            onClick={makeForward}
+            style={{ overflow: "Hidden", float: "left", margin: 4 }}
+          >
+            {">>>"}
+          </Button>
         </Grid>
       </Grid>
     </Fragment>

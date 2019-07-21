@@ -8,7 +8,7 @@ import {
   DELETE_QUESTION,
   SEARCH_QUESTION,
   SEARCH_QUESTION_BY_TITLE,
-  SEARCH_QUESTION_BY_TYPE,
+  //SEARCH_QUESTION_BY_TYPE,
   UPDATE_QUESTION
 } from "../types";
 import axios from "axios";

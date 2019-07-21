@@ -68,7 +68,7 @@ const QuestionItem = ({ props }) => {
   const authContext = useContext(AuthContext);
   const { isAuthenticated } = authContext;
   const { updateQuestion } = manageContext;
-  const { answered, id, type, title, craeteDate, options } = props;
+  const { answered, id, type, title, craeteDate } = props;
   const classes = useSytles();
   const [state, setState] = useState(props);
 
@@ -80,6 +80,7 @@ const QuestionItem = ({ props }) => {
       } else {
         item.isRight = false;
       }
+      return item.id
     });
     console.log(state);
     setState({ ...state, options: op });

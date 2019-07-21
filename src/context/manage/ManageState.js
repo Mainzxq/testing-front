@@ -27,7 +27,7 @@ const ManageState = props => {
     }
     try {
       const res = await axios.get(
-        `http://localhost:3001/question/slice?currentPage=${
+        `http://api.gosccba.cn/question/slice?currentPage=${
           item.currentPage
         }&steps=${item.steps}&type=${item.type}`
       );

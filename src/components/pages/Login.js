@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AccountCircle } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
-import PropTypes from "prop-types";
 import { Button, Dialog, TextField } from "@material-ui/core";
 import AuthContext from "../../context/auth/authContext";
 
