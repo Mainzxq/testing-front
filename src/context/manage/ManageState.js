@@ -31,7 +31,6 @@ const ManageState = props => {
           item.currentPage
         }&steps=${item.steps}&type=${item.type}`
       );
-      console.log("加载成功", res.data);
       dispatch({ type: MANAGE_LOAD_DEFAULT_QUESTION, payload: res.data });
     } catch (err) {
       console.error(err);
