@@ -21,11 +21,14 @@ const menuList = [
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: "100%",
+    width: "60%",
     maxWidth: 360,
     marginTop: 24,
     backgroundColor: theme.palette.background.paper,
-    float: "right"
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex"
+    }
   }
 }));
 
@@ -38,7 +41,7 @@ class ListItemLink extends React.Component {
     return (
       <ListItem button selected={selected} component={this.RouteLink}>
         {icon && <ListItemIcon>{icon}</ListItemIcon>}
-        <ListItemText inset primary={primary} secondary={secondary} />
+        <ListItemText primary={primary} secondary={secondary} />
       </ListItem>
     );
   }
