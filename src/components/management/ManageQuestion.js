@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import {Redirect} from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import ManageContext from "../../context/manage/manageContext";
@@ -6,7 +7,6 @@ import QuestionItem from "./QuestionItem";
 import MultiQuestion from "../question/MultiQuestion";
 import { Grid, Button, Typography, Divider } from "@material-ui/core";
 import AuthContext from "../../context/auth/authContext";
-import { Autorenew } from "@material-ui/icons";
 
 const userStyles = makeStyles(theme => ({
   root: {
@@ -31,11 +31,6 @@ const ManageQestion = () => {
   });
   // const [states, setStates] = useState(state);
 
-  // useEffect(() => {
-  //   setStates(state);
-  //   console.log(states);
-  // }, []);
-
   const makeForward = () => {
     let item = state;
     if (item.currentPage < state.pages) {
@@ -55,10 +50,13 @@ const ManageQestion = () => {
     loadDefaultQuestion(item);
   };
 
-  return (
+  return isAuthenticated ? (
     <div className={classes.root}>
       <Container>
-        <Grid container alignItems="center" justify="center">
+        <Grid container direction="column" alignItems="center" justify="center">
+          <Grid item>
+            <Typography>管理问题</Typography>
+          </Grid>
           <Grid item>
             {state.questionSlice.map(question =>
               question.type === "radio" ? (
@@ -73,27 +71,28 @@ const ManageQestion = () => {
         <Divider style={{ marginTop: 16 }} />
         <div
           style={{
-            width:180,
+            width: 180,
             textAlign: "center",
             margin: "auto",
-            marginTop: 16,
-            
+            marginTop: 16
           }}
         >
           <Button onClick={makePrevious} style={{ float: "left" }}>
             {"<<<"}
           </Button>
-          <span style={{ float: "left", margin: 4 }}>
+          <span style={{ float: "left" }}>
             <Typography variant="h6" style={{ fontSize: 18, paddingTop: 4 }}>
               {state.currentPage}/{state.pages}
             </Typography>
           </span>
-          <Button onClick={makeForward} style={{ float: "left", margin: 4 }}>
+          <Button onClick={makeForward} style={{ float: "left" }}>
             {">>>"}
           </Button>
         </div>
       </Container>
     </div>
+  ) : (
+    <Redirect to="/" />
   );
 };
 

@@ -7,14 +7,17 @@ import ToolBar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import { Home } from "@material-ui/icons";
+import { Home, FilterHdr } from "@material-ui/icons";
 import Login from "../pages/Login";
 import AuthContext from "../../context/auth/authContext";
 import { Avatar } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
-const menuList = ["关于", "查看", "管理"];
+const menuList = [
+  {title:"首页",url:"/"}, 
+  {title:"管理",url:"/manage"},
+  {title:"退出", url:"/logout"}
+];
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -86,7 +89,7 @@ const Navbar = () => {
             color="inherit"
             aria-label="Menu"
           >
-            <MenuIcon />
+            <FilterHdr fontSize="large" />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             {/* <AllInbox /> */}
@@ -127,8 +130,8 @@ const Navbar = () => {
                 />
                 <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
                   {menuList.map(item => (
-                    <MenuItem key={item} onClick={handleClose}>
-                      {item}
+                    <MenuItem key={item.title} onClick={handleClose} component={AdapterLink} href={item.url}>
+                      {item.title}
                     </MenuItem>
                   ))}
                 </Menu>
