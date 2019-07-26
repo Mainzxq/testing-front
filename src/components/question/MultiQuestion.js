@@ -103,11 +103,6 @@ const MultiQuestion = ({ props }) => {
             </Typography>
           </Avatar>
         }
-        // action={
-        //   <IconButton aria-label="Settings">
-        //     <MoreVert />
-        //   </IconButton>
-        // }
         title={
           <Typography className={classes.title}>
             {title.replace("&lt;p&gt;", "").replace("&lt;/p&gt;", "")}

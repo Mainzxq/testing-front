@@ -82,7 +82,6 @@ const QuestionItem = ({ props }) => {
       }
       return item.id;
     });
-    console.log(state);
     setState({ ...state, options: op });
   };
 

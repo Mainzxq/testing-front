@@ -82,7 +82,6 @@ const QuestionItem = ({ props }) => {
       return item.id;
     });
     setOptionsa({ options });
-    console.log(e.target);
   };
 
   const handleUpdateClick = () => {
@@ -107,11 +106,6 @@ const QuestionItem = ({ props }) => {
             </Typography>
           </Avatar>
         }
-        // action={
-        //   <IconButton aria-label="Settings">
-        //     <MoreVert />
-        //   </IconButton>
-        // }
         title={
           <Typography className={classes.title}>
             {title.replace("&lt;p&gt;", "").replace("&lt;/p&gt;", "")}
