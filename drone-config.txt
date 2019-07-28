@@ -42,8 +42,8 @@ docker run \
   --volume=/var/run/docker.sock:/var/run/docker.sock \
   --volume=/var/lib/drone:/data \
   --env=DRONE_GITHUB_SERVER=https://github.com \
-  --env=DRONE_GITHUB_CLIENT_ID=d1fa5e85f884c600c735 \
-  --env=DRONE_GITHUB_CLIENT_SECRET=c66ca5de3924472864386ab28d8bfe4f42fa99d0 \
+  --env=DRONE_GITHUB_CLIENT_ID=5380b1c7223b28e54a7d \
+  --env=DRONE_GITHUB_CLIENT_SECRET=882acfc1a7eea40803d8476b8630e2a0fce34d68 \
   --env=DRONE_RUNNER_CAPACITY=2 \
   --env=DRONE_SERVER_HOST=106.12.140.30 \
   --env=DRONE_SERVER_PROTO=http \
