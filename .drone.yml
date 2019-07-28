@@ -6,6 +6,7 @@ clone:
 
 steps:
   - name: run-build
+    pull: always
     image: node
     commands:
       - npm install
