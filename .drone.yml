@@ -3,7 +3,7 @@ name: first-line
 
 steps:
 - name: run-build
-  image: node: 10.10.16
+  image: node:alpine
   commands:
     - npm install
     - npm run build
