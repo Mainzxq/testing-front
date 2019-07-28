@@ -11,5 +11,5 @@ COPY /build /build
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
-#EXPOSE 映射端口
+#EXPOSE 映射端口 good
 EXPOSE 80
