@@ -36,3 +36,22 @@ docker run \
   --detach=true \
   --name=drone \
   drone/drone
+
+
+  docker run \
+  --volume=/var/run/docker.sock:/var/run/docker.sock \
+  --volume=/var/lib/drone:/data \
+  --env=DRONE_GITHUB_SERVER=https://github.com \
+  --env=DRONE_GITHUB_CLIENT_ID=d1fa5e85f884c600c735 \
+  --env=DRONE_GITHUB_CLIENT_SECRET=c66ca5de3924472864386ab28d8bfe4f42fa99d0 \
+  --env=DRONE_RUNNER_CAPACITY=2 \
+  --env=DRONE_SERVER_HOST=106.12.140.30 \
+  --env=DRONE_SERVER_PROTO=http \
+  --env=DRONE_TLS_AUTOCERT=true \
+--env=DRONE_USER_CREATE=username:admin,admin:true \
+  --publish=80:80 \
+  --publish=443:443 \
+  --restart=always \
+  --detach=true \
+  --name=drone \
+  drone/drone
