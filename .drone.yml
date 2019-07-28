@@ -6,7 +6,7 @@ clone:
 
 steps:
   - name: run-build
-    image: node:alpine
+    image: node
     commands:
       - npm install
       - npm run build
