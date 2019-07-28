@@ -111,22 +111,14 @@ const MultiQuestion = ({ props }) => {
         subheader={
           <div className={classes.normal}>
             <span>{type === "radio" ? "单选 " : "多选 "}</span>
-            {answered ? (
-              <Chip
-                color="primary"
-                label="已答"
-                size="small"
-                className={classes.chip}
-              />
-            ) : (
-              <Chip
-                color="secondary"
-                label="未答"
-                size="small"
-                component="p"
-                className={classes.chip}
-              />
-            )}
+
+            <Chip
+              color={answered ? "primary" : "secondary"}
+              label={answered ? "已答" : "未答"}
+              size="small"
+              className={classes.chip}
+            />
+
             <span> 创建时间: {craeteDate.slice(0, 10)}</span>
           </div>
         }
@@ -171,7 +163,7 @@ const MultiQuestion = ({ props }) => {
           ))}
         </FormControl>
       </CardContent>
-      {isAuthenticated ? (
+      {isAuthenticated && (
         <div style={{ float: "right" }}>
           <Button
             size="small"
@@ -192,8 +184,6 @@ const MultiQuestion = ({ props }) => {
             <Delete fontSize="small" style={{ fontSize: 16, paddingLeft: 4 }} />
           </Button>
         </div>
-      ) : (
-        ""
       )}
     </Card>
   );
