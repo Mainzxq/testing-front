@@ -9,7 +9,7 @@ steps:
       - npm run build
 
   - name: copy-to-server
-    image: appleboy/scp
+    image: appleboy/drone-scp
     host: 182.61.43.63
     secrets:
       - source: USERNAME
