@@ -21,13 +21,14 @@ steps:
       source:
         from_secret: scp_source
       rm: true
-  - name: restart -docker
+
+  - name: restart-docker
     image: appleboy/drone-ssh
-      host: 182.61.43.63
-      username:
-        from_secret: scp_username
-      password:
-        from_secret: scp_password
-      port: 22
-      script:
-        - docker restart react-server
+    host: 182.61.43.63
+    username:
+      from_secret: scp_username
+    password:
+      from_secret: scp_password
+    port: 22
+    script:
+      - docker restart react-server
