@@ -66,3 +66,6 @@ docker run \
     --detach=true \
     --name=drone-agent \
     drone/agent
+
+
+    进行测试，主要用于Drone驱动
