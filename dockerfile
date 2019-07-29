@@ -3,13 +3,9 @@ FROM nginx:latest
 #MAINTAINER 维护者信息
 LABEL MAINTAINER="mainzxq" 
 
-RUN mkdir -p build
-RUN npm install
-RUN npm run build
-WORKDIR /build
-COPY /build /build
-
-ENV NPM_CONFIG_LOGLEVEL warn
+COPY ./build /usr/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/
 
 #EXPOSE 映射端口 good
 EXPOSE 80
+ENTRYPOINT nginx -g "daemon off;"

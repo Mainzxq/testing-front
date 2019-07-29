@@ -21,3 +21,14 @@ steps:
       source:
         from_secret: scp_source
       rm: true
+  - name: build-docker
+    image: plugins/drone-ssh
+    settings:
+      host: 182.61.43.63
+      username:
+        from_secret: scp_username
+      password:
+        from_secret: scp_password
+      port: 22
+      script:
+        - docker restart react-server
