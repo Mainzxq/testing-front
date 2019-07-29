@@ -10,12 +10,13 @@ steps:
 
   - name: copy-to-server
     image: appleboy/drone-scp
-    host: 182.61.43.63
-    secrets:
-      - source: USERNAME
-        target: username
-      - source: TARGET
-        target: target
-      - source: SOURCE
-        target: source
-    rm: true
+    settings:
+      host: 182.61.43.63
+      secrets:
+        - source: USERNAME
+          target: username
+        - source: TARGET
+          target: target
+        - source: SOURCE
+          target: source
+      rm: true
