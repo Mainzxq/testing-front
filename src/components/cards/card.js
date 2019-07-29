@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 export default Card = (props) => {
   return (
     <div>
-      f
+      foo/bar
     </div>
   )
 }
