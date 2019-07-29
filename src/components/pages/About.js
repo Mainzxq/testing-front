@@ -1,15 +1,18 @@
 import React from "react";
+import { Typography } from "@material-ui/core";
 
 const About = () => {
   return (
     <div>
-      <h1>About this App </h1>
-      <p className="my-1">
-        This is a full stack React App for keeping contacts
-      </p>
-      <p className="bg-dark p">
+      <Typography variant="h2" component="h2" style={{textAlign: "center"}}>
+        关于这个应用
+      </Typography>
+      <Typography variant="body2" component="p" style={{textAlign: "center", margin: 16}}>
+        用作公司问卷系统的原型参考,主要提供问卷答案查询、问卷构建、问卷问题构建、账户管理等。
+      </Typography>
+      <Typography variant="body1" style={{textAlign: "center", margin: 16}}>
         <strong>Version:</strong> 1.0.0
-      </p>
+      </Typography>
     </div>
   );
 };
