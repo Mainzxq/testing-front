@@ -12,13 +12,12 @@ steps:
     image: appleboy/drone-scp
     settings:
       host: 182.61.43.63
-      secrets:
-        - source: USERNAME
-          target: username
-        - source: TARGET
-          target: target
-        - source: SOURCE
-          target: source
-        - source: PASSWORD
-          target: password
+      user:
+        from_secret: scp_username
+      password:
+        from_secret: scp_password
+      target:
+        from_secret: scp_target
+      source:
+        from_secret: scp_source
       rm: true
