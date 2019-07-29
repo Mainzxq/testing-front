@@ -86,7 +86,7 @@ const MultiQuestion = ({ props }) => {
     } else {
       props.answered = true;
     }
-    optionsa = optionsa;
+    console.log(optionsa);
     updateQuestion(props);
   };
 
