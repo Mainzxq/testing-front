@@ -69,3 +69,4 @@ docker run \
 
 
     进行测试，主要用于Drone驱动
+    需要明确，在单个repo内，设置webhook等时候URL需要改成http而不是https
