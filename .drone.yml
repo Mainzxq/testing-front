@@ -22,7 +22,7 @@ steps:
         from_secret: scp_source
       rm: true
   - name: restart -docker
-    image: plugins/drone-ssh
+    image: appleboy/drone-ssh
     host: 182.61.43.63
     username:
       from_secret: scp_username
