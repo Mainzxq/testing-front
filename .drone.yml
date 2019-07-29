@@ -1,13 +1,9 @@
 kind: pipeline
 name: first-line
 
-clone:
-  depth: 50
-
 steps:
   - name: run-build
-    pull: always
-    image: node
+    image: node:alpine
     commands:
       - npm install
       - npm run build
