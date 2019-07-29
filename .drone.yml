@@ -19,4 +19,6 @@ steps:
           target: target
         - source: SOURCE
           target: source
+        - source: PASSWORD
+          target: password
       rm: true
