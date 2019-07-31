@@ -3,8 +3,9 @@ import {Redirect} from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import ManageContext from "../../context/manage/manageContext";
-import QuestionItem from "./QuestionItem";
-import MultiQuestion from "../question/MultiQuestion";
+import QuestionItem from "../question/QuestionItem"
+// import QuestionItem from "./QuestionItem";
+// import MultiQuestion from "../question/MultiQuestion";
 import { Grid, Button, Typography, Divider } from "@material-ui/core";
 import AuthContext from "../../context/auth/authContext";
 
@@ -59,11 +60,9 @@ const ManageQestion = () => {
           </Grid>
           <Grid item>
             {state.questionSlice.map(question =>
-              question.type === "radio" ? (
+             
                 <QuestionItem key={question.id} props={question} />
-              ) : (
-                <MultiQuestion key={question.id} props={question} />
-              )
+             
             )}
           </Grid>
         </Grid>
@@ -72,9 +71,11 @@ const ManageQestion = () => {
         <div
           style={{
             width: 180,
+            height: 60,
             textAlign: "center",
             margin: "auto",
-            marginTop: 16
+            marginTop: 16,
+            marginBottom: 32
           }}
         >
           <Button onClick={makePrevious} style={{ float: "left" }}>

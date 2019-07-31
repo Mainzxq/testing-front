@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Check,
   Edit,
   RadioButtonChecked,
   RadioButtonUnchecked,
-  Delete
+  Delete,
+  CheckBox as CheckBoxIcon,
+  CheckBoxOutlineBlank
 } from "@material-ui/icons";
+import { green, amber, indigo } from "@material-ui/core/colors";
 import {
   Card,
   CardHeader,
@@ -19,18 +22,26 @@ import {
   RadioGroup,
   Typography,
   Button,
+  Checkbox,
+  Snackbar,
+  SnackbarContent,
   Divider
 } from "@material-ui/core";
-import { indigo } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import QuestionContext from "../../context/question/questionContext";
 import AuthContext from "../../context/auth/authContext";
 
 const useSytles = makeStyles(theme => ({
+  success: {
+    backgroundColor: green[600]
+  },
+  failed: {
+    backgroundColor: amber[700]
+  },
   card: {
     maxWidth: 800,
     margin: theme.spacing(1),
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   media: {
     height: 0,
@@ -59,6 +70,14 @@ const useSytles = makeStyles(theme => ({
 const QuestionItem = ({ props }) => {
   const questionContext = useContext(QuestionContext);
   const authContext = useContext(AuthContext);
+  const [alert, setAlert] = useState({
+    open: false,
+    vertical: "bottom",
+    horizontal: "center",
+    msg: "",
+    failed: false
+  });
+  const { open, vertical, horizontal, msg, failed } = alert;
   const { isAuthenticated } = authContext;
   const { deleteQuestion, updateQuestion } = questionContext;
   const { answered, id, type, title, craeteDate, options } = props;
@@ -76,25 +95,123 @@ const QuestionItem = ({ props }) => {
     });
     setOptionsa({ options });
   };
+  const handleMultiChange = e => {
+    options.map(item => {
+      if (item.id === e.target.value) {
+        item.isRight = e.target.checked;
+      }
+      return item.id;
+    });
+    setOptionsa({ options });
+  };
 
-  const handleUpdateClick = () => {
+  const closeAlert = () => {
+    setAlert({ ...alert, open: false });
+  };
+  const handleUpdateClick = async () => {
     if (props.options.filter(item => item.isRight).length === 0) {
       props.answered = false;
     } else {
       props.answered = true;
     }
-    updateQuestion(props);
+    const res = await updateQuestion(props);
+    console.log(res);
+    if (res === 0) {
+      setAlert({ ...alert, msg: "修改成功", open: true });
+    } else {
+      setAlert({ ...alert, msg: "修改失败", open: true, failed: true });
+    }
   };
 
   const handleDeleteClick = () => {
     deleteQuestion(id);
   };
+
+  const RadioAnswer = options => {
+    return (
+      <RadioGroup
+        aria-label="position"
+        name={id}
+        value={optionsa.id}
+        onChange={handleChange}
+      >
+        {options.map(item => (
+          <div key={item._id}>
+            <FormControlLabel
+              key={item.id}
+              control={
+                <Radio
+                  color="primary"
+                  fontSize="small"
+                  icon={<RadioButtonUnchecked fontSize="small" />}
+                  checkedIcon={<RadioButtonChecked fontSize="small" />}
+                  disabled={!isAuthenticated}
+                  checked={item.isRight}
+                />
+              }
+              value={item.id}
+              label={
+                <Typography className={classes.normal}>
+                  {item.text.replace("&lt;p&gt;", "").replace("&lt;/p&gt;", "")}
+                </Typography>
+              }
+              labelPlacement="end"
+            />
+
+            {item.isRight ? (
+              <Check htmlColor="green" fontSize="small" viewBox="0 0 24 12" />
+            ) : (
+              ""
+            )}
+          </div>
+        ))}
+      </RadioGroup>
+    );
+  };
+
+  const CheckBoxAnswer = options => {
+    return (
+      <div>
+        {options.map(item => (
+          <div key={item._id}>
+            <FormControlLabel
+              key={item.id}
+              control={
+                <Checkbox
+                  icon={<CheckBoxOutlineBlank />}
+                  checkedIcon={<CheckBoxIcon />}
+                  color="primary"
+                  fontSize="small"
+                  disabled={!isAuthenticated}
+                  checked={item.isRight}
+                  onChange={handleMultiChange}
+                />
+              }
+              value={item.id}
+              label={
+                <Typography className={classes.normal}>
+                  {item.text.replace("&lt;p&gt;", "").replace("&lt;/p&gt;", "")}
+                </Typography>
+              }
+              labelPlacement="end"
+            />
+            {item.isRight ? (
+              <Check htmlColor="green" fontSize="small" viewBox="0 0 24 12" />
+            ) : (
+              ""
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="Recipe" className={classes.avatar} >
-            <Typography component="p" variant="h6" style={{fontSize:12}}>
+          <Avatar aria-label="Recipe" className={classes.avatar}>
+            <Typography component="p" variant="h6" style={{ fontSize: 12 }}>
               {id.split("-")[0].toUpperCase() + id.split("-")[1]}
             </Typography>
           </Avatar>
@@ -123,48 +240,9 @@ const QuestionItem = ({ props }) => {
           <FormLabel component="legend" className={classes.normal}>
             请选择答案：
           </FormLabel>
-          <RadioGroup
-            aria-label="position"
-            name={id}
-            value={optionsa.id}
-            onChange={handleChange}
-          >
-            {options.map(item => (
-              <div key={item._id}>
-                <FormControlLabel
-                  key={item.id}
-                  control={
-                    <Radio
-                      color="primary"
-                      fontSize="small"
-                      icon={<RadioButtonUnchecked fontSize="small" />}
-                      checkedIcon={<RadioButtonChecked fontSize="small" />}
-                      disabled={!isAuthenticated}
-                      checked={item.isRight}
-                    />
-                  }
-                  value={item.id}
-                  label={
-                    <Typography className={classes.normal}>
-                      {item.text
-                        .replace("&lt;p&gt;", "")
-                        .replace("&lt;/p&gt;", "")}
-                    </Typography>
-                  }
-                  labelPlacement="end"
-                />
-                {item.isRight ? (
-                  <Check
-                    htmlColor="green"
-                    fontSize="small"
-                    viewBox="0 0 24 12"
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
-            ))}
-          </RadioGroup>
+          {props.type === "radio"
+            ? RadioAnswer(options)
+            : CheckBoxAnswer(options)}
         </FormControl>
       </CardContent>
       {isAuthenticated ? (
@@ -191,6 +269,19 @@ const QuestionItem = ({ props }) => {
       ) : (
         ""
       )}
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        key={`${vertical},${horizontal}`}
+        open={open}
+        onClose={closeAlert}
+        autoHideDuration={3000}
+      >
+        <SnackbarContent
+          className={!failed ? classes.success : classes.failed}
+          aria-describedby="client-snackbar"
+          message={<span id="client-snackbar">{msg}</span>}
+        />
+      </Snackbar>
     </Card>
   );
 };

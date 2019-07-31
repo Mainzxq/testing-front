@@ -69,10 +69,10 @@ const QuestionState = props => {
         question,
         option
       );
-      console.log(res.data);
       dispatch({ type: UPDATE_QUESTION, payload: question, result: res.data });
+      return 0;
     } catch (err) {
-      console.error(err);
+      return -1;
     }
     // dispatch({ type: UPDATE_QUESTION, payload: question });
   };
