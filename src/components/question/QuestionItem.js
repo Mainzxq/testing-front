@@ -43,13 +43,6 @@ const useSytles = makeStyles(theme => ({
     fontSize: 10,
     color: "#666666"
   },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
-  },
   chip: {
     fontSize: 10,
     height: 14
@@ -191,7 +184,7 @@ const QuestionItem = ({ props }) => {
             className={classes.normal}
             onClick={handleDeleteClick}
           >
-            删除
+            重置
             <Delete fontSize="small" style={{ fontSize: 16, paddingLeft: 4 }} />
           </Button>
         </div>

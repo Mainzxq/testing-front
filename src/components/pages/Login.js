@@ -39,6 +39,7 @@ const userStyles = makeStyles(theme => ({
 
 const Login = props => {
   const [open, setOpen] = useState(false);
+  const [err, setErr] = useState("");
   const [user, setUser] = useState({
     name: "",
     password: ""
@@ -54,6 +55,7 @@ const Login = props => {
   }, [props, isopen]);
 
   const handleClickClose = () => {
+    setErr("");
     handleOpenLogin();
   };
 
@@ -61,10 +63,14 @@ const Login = props => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const submitAuth = e => {
+  const submitAuth = async e => {
     e.preventDefault();
-    askForLogin(user);
-    handleOpenLogin();
+    const sig = await askForLogin(user);
+    if (sig === -1) {
+      setErr("登陆出问题了！");
+    } else {
+      handleOpenLogin();
+    }
   };
 
   return (
@@ -83,6 +89,11 @@ const Login = props => {
           <Typography component="h1" varian="h6">
             南玻岛用户登录
           </Typography>
+          {err && (
+            <Typography variant="body1" style={{ color: "red", fontSize: 12 }}>
+              {err}
+            </Typography>
+          )}
           <form noValidate className={classes.form} onSubmit={submitAuth}>
             <TextField
               InputProps={{ fieldclass }}

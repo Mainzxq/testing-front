@@ -6,7 +6,8 @@ import {
   ASK_FOR_AUTH,
   ASK_FOR_LOGIN,
   ASK_FOR_USER,
-  ASK_FOR_LOGOUT
+  ASK_FOR_LOGOUT,
+  LOGIN_ERR_MSG
 } from "../types";
 
 const AuthState = props => {
@@ -14,7 +15,8 @@ const AuthState = props => {
     token: null,
     user: null,
     loading: null,
-    isAuthenticated: null
+    isAuthenticated: null,
+    errorMsg: null
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -44,11 +46,15 @@ const AuthState = props => {
           payload: res.data.token,
           user: res.data.user
         });
-      } else {
-        console.log(res);
+        return 0
       }
     } catch (err) {
-      console.error(err);
+      console.log(err.response.data.message)
+      dispatch({
+        type: LOGIN_ERR_MSG,
+        payload: err.response.data.message
+      });
+      return -1
     }
   };
 
@@ -67,13 +73,13 @@ const AuthState = props => {
         `http://api.gosccba.cn/users/auth/${token}`,
         option
       );
-      
-      if(res){
+
+      if (res) {
         dispatch({ type: ASK_FOR_AUTH, isAuthenticated: true });
-      }      
+      }
     } catch (err) {
-      if(err.response && err.response.status === 401) {
-        localStorage.removeItem("token")
+      if (err.response && err.response.status === 401) {
+        localStorage.removeItem("token");
       }
     }
   };
@@ -90,6 +96,7 @@ const AuthState = props => {
     <authContext.Provider
       value={{
         state,
+        errorMsg: state.errorMsg,
         isAuthenticated: state.isAuthenticated,
         askForLogin,
         askForAuth,

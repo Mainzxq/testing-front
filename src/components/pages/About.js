@@ -4,7 +4,7 @@ import { Typography } from "@material-ui/core";
 const About = () => {
   return (
     <div>
-      <Typography variant="h2" component="h2" style={{textAlign: "center"}}>
+      <Typography variant="h4" component="h4" style={{textAlign: "center", marginTop:64}}>
         关于这个应用
       </Typography>
       <Typography variant="body2" component="p" style={{textAlign: "center", margin: 16}}>
