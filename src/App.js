@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import About from "./components/pages/About";
+import Logout from "./components/pages/Logout";
 import ManageQuestion from "./components/management/ManageQuestion";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import QuestionState from "./context/question/QuestionState";
@@ -29,6 +30,7 @@ const App = () => {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/manage" component={ManageQuestion} />
+                <Route exact path="/logout" component={Logout} />
               </Switch>
             </div>
           </Router>
