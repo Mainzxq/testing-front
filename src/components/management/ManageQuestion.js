@@ -1,14 +1,17 @@
 import React, { useContext, useState } from "react";
-import {Redirect} from "react-router-dom";
+// import "materialize-css/dist/css/materialize.min.css";
+// import "material-design-icons/iconfont/material-icons.css";
+// import M from "materialize-css/dist/js/materialize.min.js";
+import { Redirect } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import ManageContext from "../../context/manage/manageContext";
-import QuestionItem from "../question/QuestionItem"
+import QuestionItem from "../question/QuestionItem";
 // import QuestionItem from "./QuestionItem";
 // import MultiQuestion from "../question/MultiQuestion";
 import { Grid, Button, Typography, Divider } from "@material-ui/core";
 import AuthContext from "../../context/auth/authContext";
-
+// import FloatBtn from "../layout/FloatBtn";
 const userStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
@@ -29,6 +32,7 @@ const ManageQestion = () => {
   // const { questionSlice, pages, currentPage, steps } = state;
   useState(() => {
     loadDefaultQuestion();
+    // M.AutoInit();
   });
   // const [states, setStates] = useState(state);
 
@@ -43,7 +47,7 @@ const ManageQestion = () => {
   };
   const makePrevious = () => {
     let item = state;
-    if (item.currentPage < state.pages && item.currentPage !== 0) {
+    if (item.currentPage <= state.pages && item.currentPage !== 0) {
       item.currentPage = state.currentPage - 1;
       item.type = "";
     }
@@ -59,11 +63,9 @@ const ManageQestion = () => {
             <Typography>管理问题</Typography>
           </Grid>
           <Grid item>
-            {state.questionSlice.map(question =>
-             
-                <QuestionItem key={question.id} props={question} />
-             
-            )}
+            {state.questionSlice.map(question => (
+              <QuestionItem key={question.id} props={question} />
+            ))}
           </Grid>
         </Grid>
 
@@ -91,6 +93,7 @@ const ManageQestion = () => {
           </Button>
         </div>
       </Container>
+      {/* <FloatBtn /> */}
     </div>
   ) : (
     <Redirect to="/" />

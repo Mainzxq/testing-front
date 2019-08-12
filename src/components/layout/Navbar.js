@@ -14,9 +14,10 @@ import { Avatar } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
 const menuList = [
-  {title:"首页",url:"/"}, 
-  {title:"管理",url:"/manage"},
-  {title:"退出", url:"/logout"}
+  { title: "首页", url: "/" },
+  { title: "管理", url: "/manage" },
+  { title: "关于", url: "/about" },
+  { title: "退出", url: "/logout" }
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -58,10 +59,10 @@ const Navbar = () => {
   const open = Boolean(anchorEl);
 
   useEffect(() => {
-    if(localStorage.token && !isAuthenticated) {
-      askForAuth(localStorage.token)
+    if (localStorage.token && !isAuthenticated) {
+      askForAuth(localStorage.token);
     }
-  })
+  });
 
   const handleOpenLogin = () => {
     setIsopen(!isopen);
@@ -130,7 +131,12 @@ const Navbar = () => {
                 />
                 <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
                   {menuList.map(item => (
-                    <MenuItem key={item.title} onClick={handleClose} component={AdapterLink} href={item.url}>
+                    <MenuItem
+                      key={item.title}
+                      onClick={handleClose}
+                      component={AdapterLink}
+                      href={item.url}
+                    >
                       {item.title}
                     </MenuItem>
                   ))}
